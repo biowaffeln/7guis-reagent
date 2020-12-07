@@ -1,0 +1,208 @@
+* {
+  box-sizing: border-box;
+}
+body,
+html {
+  margin: 0;
+}
+
+body {
+  background-color: #008080;
+}
+
+h1 {
+  margin: 0;
+  padding: 60px 0 60px;
+  font-size: 3rem;
+  text-align: center;
+  font-family: "Pixelated MS Sans Serif", Arial;
+  font-weight: 400;
+  color: #fff;
+}
+
+input[type="number"] {
+  line-height: 2;
+  height: 21px;
+  padding: 3px 4px;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf,
+    inset 2px 2px #0a0a0a;
+  border: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  margin-bottom: 100px;
+}
+
+/* --- flight booker --- */
+
+.flight-booker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- CRUD --- */
+
+.crud select {
+  background: white;
+  height: 100px;
+  width: 100%;
+  padding-right: 0;
+}
+
+.crud .filter {
+  margin: 0;
+}
+
+.crud .filter input {
+  margin-left: 10px;
+}
+
+.crud section {
+  display: grid;
+  grid-template:
+    "a ." auto
+    "b c" auto;
+  gap: 10px;
+  align-items: start;
+}
+
+.crud select {
+  grid-area: b;
+}
+
+.crud .user-inputs {
+  grid-area: c;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  row-gap: 4px;
+}
+
+.crud .controls {
+  display: flex;
+  gap: 5px;
+}
+
+/* --- circle drawer --- */
+
+.circle-drawer .controls {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.circle-drawer .canvas {
+  width: 500px;
+  height: 300px;
+  background-color: #fff;
+  position: relative;
+  cursor: crosshair;
+}
+
+.circle-drawer .circle {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid;
+  transform: translate(-50%, -50%);
+  cursor: default;
+}
+
+.circle-drawer .circle:hover {
+  background-color: #dfdfdf;
+}
+
+.modal {
+  position: absolute;
+  border-radius: 3px;
+}
+
+.modal .window-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal input {
+  margin: 20px 0 10px;
+  width: 80%;
+}
+
+.modal p {
+  margin: 10px 0 5px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.spreadsheet {
+  width: 500px;
+  height: 300px;
+  overflow: scroll;
+}
+
+.spreadsheet table {
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.spreadsheet td,
+.spreadsheet th {
+  border: 1px solid silver;
+}
+
+.spreadsheet td.active {
+  /* border: 1px solid; */
+  box-shadow: 0 0 0 2.5px;
+  box-sizing: border-box;
+}
+
+.spreadsheet table tr td:first-child,
+.spreadsheet table th {
+  background: silver;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px grey;
+  font-family: "Pixelated MS Sans Serif", Arial;
+}
+
+.spreadsheet table th {
+  height: 23px;
+}
+
+.spreadsheet table tr td:first-child > span {
+  display: inline-block;
+  width: 22px;
+  text-align: center;
+}
+
+.spreadsheet .cell {
+  width: 60px;
+  height: 25px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.spreadsheet .cell input {
+  height: 25px;
+  width: 60px;
+  box-sizing: border-box;
+  border: none;
+  font-family: sans-serif;
+  outline: none;
+}
+
+.window.cells .window-body {
+  margin: 0;
+}
