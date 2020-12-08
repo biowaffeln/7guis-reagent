@@ -1,30 +1,11 @@
-# shadow-cljs, proto-repl, reagent template
+# Seven GUIs, built with ClojureScript+Reagent
 
-`shadow-cljs` is a build tool for ClojureScript.
+See this thread for the WIP: <https://twitter.com/biowaffeln/status/1333572910519349248>
 
-`proto-repl` is a Clojure(Script) dev env for [Atom](https://atom.io/)
+## Installation
 
-`reagent` is a ClojureScript wrapper for [React](https://reactjs.org/).
+To install the dependencies, run `yarn install` (or `npm install`). Then start the dev server with `yarn dev` and open a browser tab at `localhost:3000`.
 
-## Setup And Run
-#### Copy repository
-```shell
-git clone https://github.com/jacekschae/shadow-reagent.git && cd shadow-reagent
-```
+## Demo
 
-#### Install dependencies
-```shell
-yarn install || npm install
-```
-
-#### Run dev server
-```shell
-yarn dev || npm run dev
-```
-
-#### Compile an optimized version
-
-```shell
-yarn release || npm run release
-```
-
+Check out the live version of th project here: <https://seven-guis-reagent.vercel.app/>

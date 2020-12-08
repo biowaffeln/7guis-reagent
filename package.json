@@ -1,14 +1,14 @@
 {
-  "name": "shadow-reagent",
+  "name": "seven-guis-reagent",
   "version": "0.0.1",
-  "description": "Template for shadow-cljs and reagent projects",
+  "description": "Implementation of the Seven Guis Challenge in ClojureScript/Reagent",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jacekschae/shadow-reagent"
+    "url": "https://github.com/biowaffeln/seven-guis-reagent"
   },
   "author": {
-    "name": "Jacek Schae",
-    "email": "jacek.schae@gmail.com"
+    "name": "Mark Kvetny",
+    "email": "m.kvetny@outlook.com"
   },
   "license": "EPL-2.0",
   "scripts": {
