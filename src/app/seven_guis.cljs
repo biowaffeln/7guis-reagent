@@ -26,5 +26,8 @@
      [crud]]
     [win-98-window {:title "circle-drawer"}
      [circle-drawer]]
-    [win-98-window {:title "cells" :class "cells"}
-     [cells letters rows]]]])
+    [:div
+     [:p.description "Try some of these formulas: `=2*5+5`, `=A5/10`,
+                      `=SUM(A1:B5)`, `=5*AVG(A1:A5)`"]
+     [win-98-window {:title "cells" :class "cells"}
+      [cells letters rows]]]]])
