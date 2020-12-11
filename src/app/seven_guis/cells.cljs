@@ -9,6 +9,22 @@
 (defn- pos->keyword [letter row]
   (keyword (str letter row)))
 
+(defn- keyword->pos [kw]
+  (list
+   (second (str kw))
+   (js/parseInt (subs (str kw) 2))))
+
+(defn- char->int [ch]
+  (-> ch (.charCodeAt 0)))
+
+(defn- cell-range [c1 c2]
+  (let [[c1-letter c1-row] (keyword->pos c1)
+        [c2-letter c2-row] (keyword->pos c2)
+        row-range (range c1-row (inc c2-row))
+        letter-range (map char (range (char->int c1-letter) (inc (char->int c2-letter))))]
+    (for [col letter-range row row-range]
+      (pos->keyword col row))))
+
 (defn- init-cells [cols rows]
   (->>
    (for [col cols row rows]
@@ -18,15 +34,34 @@
 
 (def parser
   (insta/parser
-   "<expr> = add-expr | mult-expr | number | cell
+   "<expr> = add-expr | range-expr | mult-expr | number | cell
 	  <val>  = number | cell
     add-expr  = expr (('+' | '-') expr)
 		mult-expr = val ( ('*' | '/') (mult-expr|val) )
+		range-expr = ('SUM' | 'AVG') '(' cell ':' cell ')'
     number = #'[+-]?([0-9]*[.])?[0-9]+'
     cell = #'[A-Z][0-9]+'"
    :auto-whitespace (insta/parser "WS = #'\\s+'")))
 
-(declare e1 e2 cell)
+(defn get-cell-value [cell state]
+  (let [val @(r/cursor state [:cells cell :value])]
+    (if (empty? val)
+      0 (js/parseFloat val))))
+
+(defn calc-sum [cell1 cell2 state]
+  (let [cells (cell-range (keyword cell1) (keyword cell2))]
+    (->> cells
+         (map #(get-cell-value % state))
+         (reduce +))))
+
+(defn calc-avg [cell1 cell2 state]
+  (let [cells (cell-range (keyword cell1) (keyword cell2))]
+    (->> cells
+         (map #(get-cell-value % state))
+         (reduce +)
+         (* (/ 1 (count cells))))))
+
+(declare e1 e2 cell _)
 
 (defn- eval-expr [expr state]
   (match expr
@@ -38,7 +73,9 @@
                               (eval-expr e2 state))
     [:mult-expr e1 "/" e2] (/ (eval-expr e1 state)
                               (eval-expr e2 state))
-    [:cell e1] (js/parseFloat @(r/cursor state [:cells (keyword e1) :value]))
+    [:range-expr "SUM" _ e1 _ e2 _] (calc-sum (second e1) (second e2) state)
+    [:range-expr "AVG" _ e1 _ e2 _] (calc-avg (second e1) (second e2) state)
+    [:cell e1] (get-cell-value (keyword e1) state)
     [:number e1] (js/parseFloat e1)))
 
 (defn- parse-expr [expr state]
