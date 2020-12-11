@@ -43,61 +43,65 @@
     cell = #'[A-Z][0-9]+'"
    :auto-whitespace (insta/parser "WS = #'\\s+'")))
 
-(defn get-cell-value [cell state]
-  (let [val @(r/cursor state [:cells cell :value])]
-    (if (empty? val)
-      0 (js/parseFloat val))))
+(defn get-cell-value [queried-cell original-cell state]
+  (if (= original-cell queried-cell)
+    (throw (js/Error. "recursion"))
+    (let [val @(r/cursor state [:cells queried-cell :value])]
+      (if (empty? val)
+        0 (js/parseFloat val)))))
 
-(defn calc-sum [cell1 cell2 state]
+(defn calc-sum [cell1 cell2 original-cell state]
   (let [cells (cell-range (keyword cell1) (keyword cell2))]
     (->> cells
-         (map #(get-cell-value % state))
+         (map #(get-cell-value % original-cell state))
          (reduce +))))
 
-(defn calc-avg [cell1 cell2 state]
+(defn calc-avg [cell1 cell2 original-cell state]
   (let [cells (cell-range (keyword cell1) (keyword cell2))]
     (->> cells
-         (map #(get-cell-value % state))
+         (map #(get-cell-value % original-cell state))
          (reduce +)
          (* (/ 1 (count cells))))))
 
 (declare e1 e2 cell _)
 
-(defn- eval-expr [expr state]
+(defn- eval-expr [expr original-cell state]
   (match expr
-    [:add-expr e1 "+" e2]  (+ (eval-expr e1 state)
-                              (eval-expr e2 state))
-    [:add-expr e1 "-" e2]  (- (eval-expr e1 state)
-                              (eval-expr e2 state))
-    [:mult-expr e1 "*" e2] (* (eval-expr e1 state)
-                              (eval-expr e2 state))
-    [:mult-expr e1 "/" e2] (/ (eval-expr e1 state)
-                              (eval-expr e2 state))
-    [:range-expr "SUM" _ e1 _ e2 _] (calc-sum (second e1) (second e2) state)
-    [:range-expr "AVG" _ e1 _ e2 _] (calc-avg (second e1) (second e2) state)
-    [:cell e1] (get-cell-value (keyword e1) state)
+    [:add-expr e1 "+" e2]  (+ (eval-expr e1 original-cell state)
+                              (eval-expr e2 original-cell state))
+    [:add-expr e1 "-" e2]  (- (eval-expr e1 original-cell state)
+                              (eval-expr e2 original-cell state))
+    [:mult-expr e1 "*" e2] (* (eval-expr e1 original-cell state)
+                              (eval-expr e2 original-cell state))
+    [:mult-expr e1 "/" e2] (/ (eval-expr e1 original-cell state)
+                              (eval-expr e2 original-cell state))
+    [:range-expr "SUM" _ e1 _ e2 _] (calc-sum (second e1) (second e2) original-cell state)
+    [:range-expr "AVG" _ e1 _ e2 _] (calc-avg (second e1) (second e2) original-cell state)
+    [:cell e1] (get-cell-value (keyword e1) original-cell state)
     [:number e1] (js/parseFloat e1)))
 
-(defn- parse-expr [expr state]
+(defn- parse-expr [expr original-cell state]
   (try
     (-> expr
         (parser)
         (first)
-        (eval-expr state))
+        (eval-expr original-cell state))
     (catch :default e
-      (js/console.log e)
-      "ERROR")))
+      ;; (js/console.log e)
+      (if (= (.. e -message) "recursion")
+        "RECURSION"
+        "ERROR"))))
 
-(defn- parse [value state]
+(defn- parse [value original-cell state]
   (if (str/starts-with? value "=")
-    (-> value (subs 1) (parse-expr state) str)
+    (-> value (subs 1) (parse-expr original-cell state) str)
     value))
 
 (defn- cell [state key]
   (let [expr (r/cursor state [:cells key :expr])]
     (fn []
       ;; (js/console.log (str key " rerendered"))
-      (let [value (parse @expr state)]
+      (let [value (parse @expr key state)]
         (swap! state assoc-in [:cells key :value] value)
         [:td
          [:div.cell
