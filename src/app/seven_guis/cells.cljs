@@ -35,7 +35,7 @@
 (def parser
   (insta/parser
    "<expr> = add-expr | range-expr | mult-expr | number | cell
-	  <val>  = number | cell
+	  <val>  = number | cell | range-expr
     add-expr  = expr (('+' | '-') expr)
 		mult-expr = val ( ('*' | '/') (mult-expr|val) )
 		range-expr = ('SUM' | 'AVG') '(' cell ':' cell ')'
