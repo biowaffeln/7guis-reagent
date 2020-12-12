@@ -57,10 +57,15 @@ input[type="number"] {
 /* --- CRUD --- */
 
 .crud select {
-  background: white;
-  height: 100px;
   width: 100%;
   padding-right: 0;
+}
+
+@media (hover: hover) {
+  .crud select {
+    height: 100px;
+    background: white;
+  }
 }
 
 .crud .filter {
