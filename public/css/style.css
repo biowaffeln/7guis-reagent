@@ -61,7 +61,7 @@ input[type="number"] {
   padding-right: 0;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (min-width: 600px) {
   .crud select {
     height: 100px;
     background: white;
