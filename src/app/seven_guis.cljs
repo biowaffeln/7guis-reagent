@@ -20,24 +20,30 @@
                                           :on-close on-close}
                            [counter]]
                  :temp    [win-98-window {:title "temperature converter"
+                                          :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/temperature_converter.cljs"
                                           :on-close on-close}
                            [temperature-converter]]
                  :flight  [win-98-window {:title "flight booker"
+                                          :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/flight_booker.cljs"
                                           :on-close on-close}
                            [flight-booker]]
                  :timer   [win-98-window {:title "timer"
+                                          :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/timer.cljs"
                                           :on-close on-close}
                            [timer]]
                  :crud    [win-98-window {:title "crud"
+                                          :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/crud.cljs"
                                           :on-close on-close}
                            [crud]]
                  :draw  [win-98-window {:title "circle-drawer"
+                                        :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/circle_drawer.cljs"
                                         :on-close on-close}
                          [circle-drawer]]
                  :spread  [:div
                            [:p.description "Try some of these formulas: `=2*5+5`, `=A5/10`,
                             `=SUM(A1:B5)`, `=5*AVG(A1:A5)`"]
                            [win-98-window {:title "cells" :class "cells"
+                                           :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/cells.cljs"
                                            :on-close on-close}
                             [cells letters rows]]]})
 
