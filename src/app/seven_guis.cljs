@@ -39,13 +39,13 @@
                                         :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/circle_drawer.cljs"
                                         :on-close on-close}
                          [circle-drawer]]
-                 :spread  [:div
-                           [:p.description "Try some of these formulas: `=2*5+5`, `=A5/10`,
+                 :cells  [:div
+                          [:p.description "Try some of these formulas: `=2*5+5`, `=A5/10`,
                             `=SUM(A1:B5)`, `=5*AVG(A1:A5)`"]
-                           [win-98-window {:title "cells" :class "cells"
-                                           :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/cells.cljs"
-                                           :on-close on-close}
-                            [cells letters rows]]]})
+                          [win-98-window {:title "cells" :class "cells"
+                                          :link "https://github.com/biowaffeln/seven-guis-reagent/blob/master/src/app/seven_guis/cells.cljs"
+                                          :on-close on-close}
+                           [cells letters rows]]]})
 
 
 (defn app []
