@@ -8,4 +8,4 @@ To install the dependencies, run `yarn install` (or `npm install`). Then start t
 
 ## Demo
 
-Check out the live version of th project here: <https://seven-guis-reagent.vercel.app/>
+Check out the live version of th project here: <https://7-guis-reagent.netlify.app/>
